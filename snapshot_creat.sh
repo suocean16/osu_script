@@ -28,7 +28,7 @@ zy_drop() {
 
 zy_showdb()
 {
-    if [ $1 == "" ]; then
+    if [ "x$1" == "x" ]; then
 	    mysql -u root  -e "show databases;" | fgrep "zy_" 
     else
 	    mysql -u root  -e "show databases;" | fgrep "zy_"  | fgrep $1
