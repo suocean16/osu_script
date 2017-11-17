@@ -1,0 +1,116 @@
+
+
+http://www.itlogger.com/network/1545.html
+
+'http://www.tebon.com.cn/JSONService/infoDetail.jsp?classid=000100010006000900010053&infoId=13960309&hrefURL=&filter=' not allowed
+
+alert-msg
+'http://www.tebon.com.cn/download/ewebEditFiles/20110528145908009.png' not allowed
+'http://www.tebon.com.cn/classHTML/00010001000500010003.html' not allowed
+invalid hostname 'shixin.court.gov.cn'
+'http://www.tebon.com.cn/hexin/' not allowed
+'http://www.tebon.com.cn/dbzq/public/detail.html?classid=00010001000500050002&infoId=3440534' not allowed
+
+'http://www.tebon.com.cn/download/ewebEditFiles/20110528145913017.jpg' not allowed
+
+'http://www.tebon.com.cn/JSONService/infoDetail.jsp?classid=0001000100070009&filter=&hrefURL=&infoId=15440891' not allowed
+
+'http://www.tebon.com.cn/download/201708/11/15024183651193.jpg' not allowed
+
+invalid hostname 'tebon.com.cn'
+'http://www.tebon.com.cn/JSONService/rewinJsonInfoListMore.jsp?classid=0001000100060009000100390002&pageIndex=1&hrefURL=&filter=' not allowed
+'http://www.tebon.com.cn/JSONService/rewinJsonInfoListMore.jsp?classid=0001000100060009000100350002&pageIndex=2&hrefURL=&filter=' not allowed
+
+'http://www.tebon.com.cn/dbzq/zjdb/zpzw_list.jsp?classid=0001000100110010&f=0.9293949462421609&type=0&hrefURL=&filter=' not allowed
+
+'http://www.tebon.com.cn/basic/jj/002021/jjtzzh_cg_48.htm' not allowed
+'http://www.tebon.com.cn/basic/[0-9z-a/_]*.htm' not allowed
+missing form id
+
+invalid request header 'Accept-Charset', value 'gb2312,gbk,utf-8;q=0.7,*;q=0.7n'
+invalid request header 'Accept', value 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2'
+
+
+www.tebon.com.cn/basic/[0-9z-a/_]*.htm
+
+
+http://www.tebon.com.cn/dbzq/public/detail.html?classid=00010001000500050002&infoId=3440534
+
+
+
+www.tebon.com.cn/hexin/
+
+invalid request header 'Accept', value 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2'
+select * from fff_1 where `alert-msg`  regexp "invalid request header [',;*. =A-Za-z0-9/\-]*;q=\.2'";
+
+'http://10.1.168.10/dbzq/public/footer.jsp?classid=0001000100040007&f=0.4415503258298141&hrefURL=&filter=' not allowed
+
+http://www.tebon.com.cn/website/ggzl/ggzl.jsp?stockCode=600987  
+http://www.tebon.com.cn/website/ggzl/ggzl.jsp?stockCode=601939
+重要，让网站 crash
+
+http://www.tebon.com.cn/crm/jjrkhjl/jjrDetail.jsp?jjrName=%%E5%%88%%98%%E4%%BF%%8A
+web server 阻挡
+
+
+
+'http://www.tebon.com.cn/crm/jjrkhjl/jjrDetail.jsp?jjrName=%%E5%%88%%98%%E4%%BF%%8A' not allowed
+
+
+****************************************
+
+zy_view_without zy_debang alert_table vv2 "download\/ewebEditFiles\/.*png"
+zy_view_without zy_debang vv2 vv3 "classHTML\/[0-9]*\.html"
+zy_view_without zy_debang vv3 vv4  "missing form id"
+zy_view_without zy_debang vv4 vv5   "invalid hostname 'localhost'"
+zy_view_without zy_debang vv5 vv6   "invalid hostname 'shixin.court.gov.cn'"
+zy_view_without zy_debang vv6 vv7   "www.tebon.com.cn/hexin/'"
+zy_view_without zy_debang vv7 vv8   "dbzq\/public\/detail.html\?classid[0-9=]*&infoId[0-9=]*"
+
+zy_view_without zy_debang vv7 vv8   "download\/ewebEditFiles\/.*\.[a-z]{3}"
+zy_view_without zy_debang vv8 vv9   "dbzq\/public\/detail.html.classid[0-9=]*&infoId[0-9=]*"
+zy_view_without zy_debang vv9 vv10   "infoDetail.jsp?classid[0-9=]*&infoId[0-9=]*&hrefURL[0-9=]*&filter[0-9=]*"
+zy_view_without zy_debang vv10 vv11   "infoDetail.jsp?(classid[0-9=]*){0,1}(&filter[0-9=]*){0,1}(&infoId[0-9=]*){0,1}(&hrefURL[0-9=]*){0,1}"
+zy_view_without zy_debang vv11 vv12   "download[0-9/]*\.[a-z]{3}" 
+zy_view_without zy_debang vv12 vv13   "invalid hostname 'tebon.com.cn'" 
+zy_view_without zy_debang vv13 vv14   "invalid hostname 'www.debang.com.cn'"
+zy_view_without zy_debang vv14 vv15   "JSONService\/[0-9a-z.?=&A-Z]*"
+zy_view_without zy_debang vv15 vv16   "www.tebon.com.cn\/dbzq\/[0-9a-z.?=&A-Z]*"
+zy_view_without zy_debang vv16 vv17   "www.tebon.com.cn\/basic\/[0-9z-a/_]*.htm"
+
+
+zy_view_without zy_debang vv16 vv17   "www.tebon.com.cn\/basic\/[0-9z-a/_]*.htm"
+
+create table alert_filter1 as select * from vv17;
+select count(*) from alert_filter1 where ip!="101.201.116.200";
+select count(*) from alert_filter1 where ip="101.201.116.200";
+create view fff_1 as  select * from alert_filter1 where ip!="101.201.116.200";
+
+select * from fff_1 where `alert-msg`  regexp "invalid request header [',;*. =A-Za-z0-9\-]*;q=0\.7n'";
+select * from fff_1 where `alert-msg`  regexp "invalid request header [',;*. =A-Za-z0-9\-]*;q=\.2'";
+
+zy_view_without zy_debang fff_1 fff_2 "invalid request header [',;*. =A-Za-z0-9\-]*;q=0\.7n'"
+zy_view_without zy_debang fff_2 fff_3 "invalid request header [',;*. =A-Za-z0-9\-]*;q=\.2'";
+zy_view_without zy_debang fff_3 fff_4 "invalid id";
+
+select * from fff_4 where `alert-msg`  regexp "invalid request header [',;*. =/A-Za-z0-9\-]*q=\.2'";
+zy_view_without zy_debang fff_4 fff_5 "invalid request header [',;*. =/A-Za-z0-9\-]*q=\.2'";
+
+
+attribute 'JSESSIONID' not found - value '0000G_OZjfRM_Jf-bp_f2r76HQd:-1' - (stripped)
+attribute 'BCSI-CS-1877e41cafb83fce' not found - value '2' - (stripped)
+
+select * from fff_5 where `alert-msg`  regexp "attribute '[a-zA-Z0-9_\-]*' not found - value";
+zy_view_without zy_debang fff_5 fff_6 "attribute '[a-zA-Z0-9_\-]*' not found - value";
+
+create view fff_7  as  select * from fff_6  where ip!="10.1.168.200";
+
+zy_view_without zy_debang fff_7 fff_8   "invalid hostname 'www.dbzq.com.cn'"
+
+create view fff_9 as  select * from fff_8 where ip!="175.175.62.39";
+create view fff_10 as  select * from fff_9 where ip!="218.87.86.103";
+
+************************
+
+本次过滤，把很多攻击都漏掉了。 
+比如  ： php 代码注入攻击，也给filter 了。 后边在考虑如何加入。 
