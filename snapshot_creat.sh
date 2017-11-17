@@ -19,11 +19,18 @@ zy_createdb()
 
 zy_drop() {
     if [ "s$1" == "s" ]; then 
-        echo "Please input datebase name"
+        echo "zy_drop database [table]"
+        return 1;
     fi 
     db="$1"
+    table="${2}"
 
-    mysql -u root  -e "drop database $db;"
+    if [ "x${table}" != "x" ]; then
+        mysql -u root  -e "use $db; drop view if exists ${table}"
+    else 
+    #    mysql -u root  -e "drop database $db;"
+        echo "drop  databasesssss"
+    fi
 }
 
 zy_showdb()
@@ -49,4 +56,30 @@ zy_loaddb()
 
     echo "will start load database"
     mysql -u root  -e "use ${db}; LOAD XML LOCAL INFILE \"${alert_file}\" INTO TABLE alert_table ROWS IDENTIFIED BY '<alert>';"
+}
+
+# zy_exe zy_osu "select * from alert_table where \`alert-msg\` regexp \"localhost\";"
+zy_exe() 
+{
+    db="$1"
+    cmd="$2"
+    mysql -u root  -e "use ${db}; ${cmd} " 
+}
+
+#zy_view_without zy_osu alert_table vv1  "download\/ewebEditFiles\/.*png"
+zy_view_without() {
+    db=$1
+    base=$2
+    new=$3
+    filter=$4    
+
+
+    [ "x${filter}" == "x" ] && echo "zy_view_without database_name, base, viewer, msg_filter to create new viewer" && return 1
+    $(zy_drop ${db} ${new})
+
+    cmd="create view ${new} as select * from ${base} where \`alert-msg\` not regexp \"${filter}\";"
+
+    echo "${cmd}"
+    mysql -u root  -e "use ${db}; ${cmd} "
+	
 }
