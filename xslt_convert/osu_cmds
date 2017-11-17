@@ -1,0 +1,12 @@
+
+0  export XML from mysql 
+   mysql -X -u root -e "use zy_debang; select * from fff_10;" > fff_10.xml
+
+1  replace this string
+ sed 's/xsi:nil="true"//g' ss.xml
+
+2   convert to create new xml
+xsltproc hello.xsl hello.xml > result.xml  
+
+3   format it
+xmllint --format result.xml 

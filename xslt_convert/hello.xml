@@ -1,0 +1,35 @@
+<rows>
+<row>
+    <field name="date-time">2017-09-06 10:02:23</field>
+    <field name="alert-msg">'http://www.tebon.com.cn/job_target.jsp' not allowed</field>
+    <field name="ip">123.114.25.199</field>
+    <field name="remote-name"  />
+    <field name="request">GET /job_target.jsp HTTP/1.1</field>
+    <field name="action">Would Deny</field>
+    <field name="request-URI">/job_target.jsp</field>
+    <field name="method">GET</field>
+    <field name="status-code">403</field>
+    <field name="reason">Forceful Browsing</field>
+    <field name="reason-code">10</field>
+    <field name="content-type"  />
+    <field name="user-agent">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_</field>
+    <field name="host">www.tebon.com.cn</field>
+  </row>
+
+  <row>
+    <field name="date-time">2017-09-06 10:02:41</field>
+    <field name="alert-msg">invalid request header 'Accept-Charset', value 'ISO-8859-1;utf-8;q=0.7,*;q=0.7'</field>
+    <field name="ip">138.68.65.168</field>
+    <field name="remote-name"  />
+    <field name="request">GET / HTTP/1.1</field>
+    <field name="action">Would Deny</field>
+    <field name="request-URI">/</field>
+    <field name="method">GET</field>
+    <field name="status-code">400</field>
+    <field name="reason">Malformed</field>
+    <field name="reason-code">11</field>
+    <field name="content-type"  />
+    <field name="user-agent">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) </field>
+    <field name="host">www.tebon.com.cn</field>
+  </row>
+</rows>
