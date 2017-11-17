@@ -2,7 +2,7 @@
 <xsl:template match="/">
 
 <alerts>
-<xsl:for-each select="rows/row">
+<xsl:for-each select="resultset/row">
     <alert>
         <date-time><xsl:value-of select="field[@name='date-time']"/></date-time>
         <alert-msg><xsl:value-of select="field[@name='alert-msg']"/></alert-msg>
