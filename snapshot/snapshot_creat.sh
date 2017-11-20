@@ -1,4 +1,24 @@
 #!/bin/bash
+zy_showview()
+{
+    [ "x" == "x$1" ] && echo "Usage: zy_showview dababase" && return 1
+    mysql -u root  -e "use ${1}; select TABLE_NAME from  information_schema.VIEWS where TABLE_SCHEMA='${1}'\G" | fgrep -v "***" | cut -d: -f2
+}
+
+zy_showviewinfo()
+{
+    [ "x" == "x$1"  -o "x" == "x$2" ] && echo "Usage: zy_showviewinfo dababase table/view" && return 1
+    mysql -u root  -e "use ${1}; select count(*) from  ${2}"
+}
+
+zy_showcount() 
+{
+    [ "x" == "x$1" -o "x" == "x$2" ] && echo "Usage: zy_showcount database table/view name" && return 1
+    db="$1"
+    cmd="select count(*) from $2"
+
+    mysql -u root  -e "use ${db}; select count(*) from  $2"
+}
 
 zy_sortbylen()
 {
@@ -80,7 +100,7 @@ zy_exe()
 {
     db="$1"
     cmd="$2"
-    mysql -u root  -e "use ${db}; ${cmd} " 
+    mysql -u root  -e "use ${db}; \"${cmd}\" " 
 }
 
 #zy_view_without zy_osu alert_table vv1  "download\/ewebEditFiles\/.*png"
