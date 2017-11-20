@@ -7,7 +7,7 @@ echo "new " > $false_positive
 echo "new " > $alert_right
 while read line
 do
-#    str="/usr/bin/wget --timeout=3  --spider --level=1 --no-verbose  --no-cache  $line "
+#   str="/usr/bin/wget --timeout=3  --spider --level=1 --no-verbose  --no-cache  $line "
     str="/usr/bin/curl --connect-timeout 6 -s -w %{http_code}  -o /dev/null $line "
     echo $str
     ret=`$str`
