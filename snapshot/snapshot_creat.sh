@@ -120,6 +120,24 @@ zy_view_without() {
     mysql -u root  -e "use ${db}; ${cmd} "
 }
 
+zy_view_showfilter() {
+    db=$1
+    base=$2
+    new=$3
+    filter=$4    
+
+
+    [ "x${filter}" == "x" ] && echo "zy_view_showfilter database_name, base, viewer, msg_filter to create new viewer" && return 1
+
+    cmd=" select * from ${base} where \`alert-msg\` REGEXP '${filter}';"
+
+    echo "${cmd}"
+    mysql -u root  -e "use ${db}; ${cmd} "
+}
+
+
+
+
 zy_useage(){
     echo -e "Main commands:"
     echo -e "\tstep 1: zy_showdb:\tTo see if there is conflicate database name" 
