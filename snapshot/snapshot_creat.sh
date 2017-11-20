@@ -1,5 +1,11 @@
 #!/bin/bash
 
+zy_sortbylen()
+{
+    [ "x" == "x$1" ] && echo "Usage: zy_sortbylen file" && return 1
+    awk ' { print length, $0}'  $1  | sort -n | sed 's/.* //'
+}
+
 zy_createdb()
 {
     if [ "s$1" == "s" ]; then 
