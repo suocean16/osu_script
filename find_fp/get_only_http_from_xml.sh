@@ -1,6 +1,27 @@
 #!/usr/bin/bash
-file=$1
+type=$1
+file=$2
+tmp1=/tmp/alert_http.tmp
+tmp2=/tmp/alert_http_2.tmp
+out=./${file}_out.txt
 
+[ $2"" == "" ] && echo -e "Usage :\n\t./get_only_http.sh [xml|sql] alert_file" && exit
+
+zy_xml()
+{
+        egrep "<alert-msg>[&apos;']+http://" ${file} > ${tmp1}
+        sed -i 's/\t<alert-msg>&apos;http/http/' ${tmp1}
+        sed -i 's/&apos; not allowed<\/alert-msg>//' ${tmp1}
+}
+
+zy_sql()
+{
+    sqlite3 -list ${file} 'select msg from alerts;' > ${tmp1}
+    egrep "^'http://" ${tmp1} > ${tmp2}
+    sed -i "s/' not allowed//" ${tmp2}
+    sed -i "s/'//" ${tmp2}
+    mv ${tmp2} ${tmp1}
+}
 
 zy_sortbylen()
 {
@@ -8,9 +29,8 @@ zy_sortbylen()
     awk ' { print length, $0}'  $1  | sort -n | sed 's/.* //'
 }
 
-egrep "<alert-msg>[&apos;']+http://" alert.xml > /tmp/alert_http.tmp
-sed -i 's/\t<alert-msg>&apos;http/http/' /tmp/alert_http.tmp
-sed -i 's/&apos; not allowed<\/alert-msg>//' /tmp/alert_http.tmp
+[ $type == "xml" ] && zy_xml
+[ $type == "sql" ] && zy_sql
+sort -u ${tmp1} > ${tmp2}
+zy_sortbylen ${tmp2} > ${out}
 
-sort -u /tmp/alert_http.tmp > /tmp/alert_http_2.tmp
-zy_sortbylen /tmp/alert_http_2.tmp > ./only_${file}
