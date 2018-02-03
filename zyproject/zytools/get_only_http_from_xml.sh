@@ -3,8 +3,9 @@ file=$1
 tmp1=/tmp/alert_http.tmp
 tmp2=/tmp/alert_http_2.tmp
 out=${file}_only_http.txt
+[ $2"" == "" ] || out=${2}
 
-[ $1"" == "" ] && echo -e "Usage :\n\t./get_only_http.sh alert_file" && exit
+[ $1"" == "" ] && echo -e "Usage :\n\t./get_only_http.sh alert_file [output_file]" && exit
 
 zy_xml()
 {
