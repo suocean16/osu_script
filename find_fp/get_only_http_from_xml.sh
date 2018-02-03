@@ -1,11 +1,11 @@
 #!/usr/bin/bash
-type=$1
-file=$2
+file=$1
 tmp1=/tmp/alert_http.tmp
 tmp2=/tmp/alert_http_2.tmp
-out=./${file}_out.txt
+out=${file}_only_http.txt
+[ $2"" == "" ] || out=${2}
 
-[ $2"" == "" ] && echo -e "Usage :\n\t./get_only_http.sh [xml|sql] alert_file" && exit
+[ $1"" == "" ] && echo -e "Usage :\n\t./get_only_http.sh alert_file [output_file]" && exit
 
 zy_xml()
 {
@@ -29,8 +29,11 @@ zy_sortbylen()
     awk ' { print length, $0}'  $1  | sort -n | sed 's/.* //'
 }
 
+/usr/bin/file ${file} 2>/dev/null | fgrep -i sql  && type="sql"
+/usr/bin/file ${file} 2>/dev/null | fgrep -i xml  && type="xml"
+
 [ $type == "xml" ] && zy_xml
 [ $type == "sql" ] && zy_sql
 sort -u ${tmp1} > ${tmp2}
+echo ${out}
 zy_sortbylen ${tmp2} > ${out}
-
