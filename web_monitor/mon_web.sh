@@ -1,16 +1,17 @@
 #!/usr/bin/bash
-base="/root/zy/web_monitor"
+base="`pwd`"
 out="$base/zy/index.html"
-break_base="${base}/zy"
+break_base="${base}/zy/break"
 
 pidof $0 && exit
 
 zysendmail() 
 {
 	break_file=$1
-	url=$2
+	url=${2:7:18}
 	echo "will send email for ${url}"
-	echo "will delete ${break_file}"
+	
+	./sms/dysms_python/api_demo/aliyun-python-sdk-dysmsapi/demo.py ${url} 15810130943
 
 }
 
@@ -41,7 +42,7 @@ do
 	if [[ ${breaktime} -gt 2 ]]; then
 	    echo $(zysendmail ${break_file} ${url})
 	fi
-	echo "URL not work : ${url}"
+	echo -e "URL not work : ${url}\n"
     else
         echo "work well" >> $out
 	echo "URL work well : ${url}"

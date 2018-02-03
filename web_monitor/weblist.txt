@@ -1,6 +1,6 @@
 gxun	http://xsh.gxun.edu.cn
 lzezx	http://www.lzezx.com
 dxqh	http://www.dxqh.net
-coscotec	http://www.coscotec.com/cosconetworkbj/
 gxgj	http://www.gxgj.com
 gtjazg	https://www.gtjazg.com
+coscotec	http://www.coscotec.com/cosconetworkbj/
