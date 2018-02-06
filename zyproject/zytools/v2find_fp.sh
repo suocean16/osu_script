@@ -1,7 +1,7 @@
 #!/bin/bash
 filename="$1"
 false_positive="${filename}_only_fp.txt"
-alert_right="${filename}_only_alert_right.txt"
+alert_right="${filename}_only_attack.txt"
 
 echo "new " > $false_positive
 echo "new " > $alert_right
