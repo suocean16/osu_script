@@ -10,21 +10,35 @@ find ${top} -name "*.zip"  | sort | xargs dirname > ${tmp_folder}/zip_file_list.
 
 diff ${tmp_folder}/usr_file_list.txt ${tmp_folder}/zip_file_list.txt | fgrep ${base} |  cut -d' '  -f2 > ${tmp_folder}/todo_zip.txt
 
+filter_attack_ip()
+{
+    alert_file=${1}
+    alert_folder=`dirname ${alert_file}`
+       
+ 
+    
+}
+
 # will enter  support folder
 do_work()
 {
     supp_folder=$1
     supp_work=${supp_folder}/supp_work
     af_list=${supp_work}/alert_file.txt
+    attack_folder=${supp_folder}/attack_folder
     logs=${supp_folder}/usr/local/waf/logs/
 
     mkdir ${supp_work}
+    mkdir ${attack_folder}
     cd ${supp_folder}
     unzip *.zip
     find  ${logs}  -name "*alert*" > ${af_list}
     while read line
     do
+        # it is alert file
         alert_file=$line
+        filter_attack_ip ${alert_file}
+
         # here create only http url file
         onlyhttp=${alert_file//./_}
         onlyhttp_out="${onlyhttp}.txt"
