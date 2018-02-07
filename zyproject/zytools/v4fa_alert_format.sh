@@ -53,10 +53,11 @@ find_attack "-A 1 -B 1" "alert-msg.*((WindowsPowerShell)|(cmd\.exe))" "<none-nee
 find_attack "-B 4" "<request>(OPTIONS)|(PROPFIND)|(CONNECT)" "<remote-name>" "HTTP Method Attack" "http_method_attack.html"
 
 
+echo "OOOOOOOOOOOOO"
+awk '/<ip>/{gsub("\t","");printf("%s|\n",$0)}' ${res_path}*.html | sort -u | awk 'BEGIN{printf "egrep -v \""};{printf $0}END{printf("<ip><ipf><ip><ip><ip>\"  ")}'  > ${script_folder}except_ip.sh}
 
 
-
-awk 'BEGIN{printf "egrep -v \""}; /<ip>/{gsub(/\t/,"");printf("%s|",$0)};END{printf("<ip><ip><ip><ip><ip>\"  ")}' ${res_path}/*.html > ${script_folder}/except_ip.sh
+#awk 'BEGIN{printf "egrep -v \""}; /<ip>/{gsub(/\t/,"");printf("%s|",$0)};END{printf("<ip><ip><ip><ip><ip>\"  ")}' ${res_path}/*.html > ${script_folder}/except_ip.sh
 
 echo -n "${alert_folder}/* " >> ${script_folder}/except_ip.sh
 echo -n " | fgrep -A 1 -B 1 \"<ip>\" "  >> ${script_folder}/except_ip.sh

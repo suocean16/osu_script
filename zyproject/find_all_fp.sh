@@ -12,10 +12,11 @@ diff ${tmp_folder}/usr_file_list.txt ${tmp_folder}/zip_file_list.txt | fgrep ${b
 
 filter_attack_ip()
 {
-    alert_file=${1}
-    alert_folder=`dirname ${alert_file}`
-       
- 
+    alert_folder=$1
+    attack_folder=$2
+    script_folder=$3
+
+    ${base}/zytools/v4fa_alert_format.sh  ${alert_folder} ${attack_folder} ${script_folder} 
     
 }
 
@@ -32,12 +33,17 @@ do_work()
     mkdir ${attack_folder}
     cd ${supp_folder}
     unzip *.zip
+
+
+    filter_attack_ip ${logs} ${attack_folder} ${attack_folder}
+
+    exit 
+
     find  ${logs}  -name "*alert*" > ${af_list}
     while read line
     do
         # it is alert file
         alert_file=$line
-        filter_attack_ip ${alert_file}
 
         # here create only http url file
         onlyhttp=${alert_file//./_}
