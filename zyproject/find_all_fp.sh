@@ -26,7 +26,7 @@ do_work()
     supp_folder=$1
     supp_work=${supp_folder}/supp_work
     af_list=${supp_work}/alert_file.txt
-    attack_folder=${supp_folder}/attack_folder
+    attack_folder=${supp_folder}/attack_folder/
     logs=${supp_folder}/usr/local/waf/logs/
 
     mkdir ${supp_work}
@@ -35,9 +35,8 @@ do_work()
     unzip *.zip
 
 
-    filter_attack_ip ${logs} ${attack_folder} ${attack_folder}
+#    filter_attack_ip ${logs} ${attack_folder} ${attack_folder}
 
-    exit 
 
     find  ${logs}  -name "*alert*" > ${af_list}
     while read line
