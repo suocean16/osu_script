@@ -32,8 +32,12 @@ zy_sortbylen()
 /usr/bin/file ${file} 2>/dev/null | fgrep -i sql  && type="sql"
 /usr/bin/file ${file} 2>/dev/null | fgrep -i xml  && type="xml"
 
-[ $type == "xml" ] && zy_xml
-[ $type == "sql" ] && zy_sql
+if [ "x$type" == "xsql" ]; then 
+    zy_sql
+else
+    zy_xml
+fi
+
 sort -u ${tmp1} > ${tmp2}
 echo ${out}
 zy_sortbylen ${tmp2} > ${out}

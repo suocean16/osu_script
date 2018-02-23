@@ -26,7 +26,6 @@ find_attack()
                 | egrep -v "${escape}"  > ${outfile}
 
 	if [ -s ${outfile} ] ; then
-		echo "</table><br/>" >> ${outfile}
 		line=`fgrep -r "<alert-msg>" ${outfile} | wc | awk '{printf("<h4>Attack %s times</h4>", $1)}'`
 		sed  -i "1i $line" ${outfile}
 		echo "find attack to ${title} --- ${line}"
@@ -52,16 +51,17 @@ find_attack "-i -A 1 -B 1" "alert-msg.*select[%* ]" "<none-need-escape>" "SQL In
 find_attack "-A 1 -B 1" "alert-msg.*((WindowsPowerShell)|(cmd\.exe))" "<none-need-escape>" "Windows system attack" "win_attack.html"
 find_attack "-B 4" "<request>(OPTIONS)|(PROPFIND)|(CONNECT)" "<remote-name>" "HTTP Method Attack" "http_method_attack.html"
 
+# this line do not filte IP address take place times.
+#awk '/<ip>/{gsub("\t","");printf("%s|\n",$0)}' ${res_path}*.html | sort -u | awk 'BEGIN{printf "egrep -v \""};{printf $0}END{printf("<ip><ipf><ip><ip><ip>\"  ")}'  > ${script_folder}/except_ip.sh
 
-awk '/<ip>/{gsub("\t","");printf("%s|\n",$0)}' ${res_path}*.html | sort -u | awk 'BEGIN{printf "egrep -v \""};{printf $0}END{printf("<ip><ipf><ip><ip><ip>\"  ")}'  > ${script_folder}/except_ip.sh
-
-
-#awk 'BEGIN{printf "egrep -v \""}; /<ip>/{gsub(/\t/,"");printf("%s|",$0)};END{printf("<ip><ip><ip><ip><ip>\"  ")}' ${res_path}/*.html > ${script_folder}/except_ip.sh
+# we filter the IP address:
+# when a IP address take place more than 4 times , we assume it is a attack IP address.
+awk '/<ip>/{gsub("\t","");printf("%s|\n",$0)}' ${res_path}*.html |  uniq -c | sort -n | egrep -v " [0-4] " | awk '{print $2}' | awk 'BEGIN{printf "egrep -h -v \""};{printf $0}END{printf("<ip><ipf><ip><ip><ip>\"  ")}'  > ${script_folder}/except_ip.sh
 
 echo -n "${alert_folder}/* " >> ${script_folder}/except_ip.sh
-echo -n " | fgrep -A 1 -B 1 \"<ip>\" "  >> ${script_folder}/except_ip.sh
+echo -n " | fgrep -A 1   -B 1 \"<ip>\" "  >> ${script_folder}/except_ip.sh
 chmod a+x ${script_folder}/except_ip.sh
-#${script_folder}/except_ip.sh
+${script_folder}/except_ip.sh > ${script_folder}/filted_alert.txt
 
 
 
