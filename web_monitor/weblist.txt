@@ -4,7 +4,7 @@ dxqh	http://www.dxqh.net
 gxgj	http://www.gxgj.com
 gtjazg	https://www.gtjazg.com
 gtjazg_wei	https://m.gtjazg.com
-coscotec	http://www.coscotec.com/cosconetworkbj/
+#coscotec	http://www.coscotec.com/cosconetworkbj/
 bokala	http://www.bokala.com/
 zyprotect http://zyprotect.com
 lianchu http://www.lczq.com/
