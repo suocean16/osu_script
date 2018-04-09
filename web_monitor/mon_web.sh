@@ -10,9 +10,16 @@ zysendmail()
 {
 	break_file=$1
 	url=${2:7:18}
-	echo "will send email for ${url}" >> ${log}
+	action=$3
+
+	if [ ${action} == "back" ]; then
+		aliyun_temp="SMS_130910438"
+	else
+		aliyun_temp="SMS_123738824"
+	fi
+	echo "will send email for ${url} ${action}" >> ${log}
 	#echo $PATH >> ${log}	
-	/root/zy/osu_script/web_monitor/sms/dysms_python/api_demo/aliyun-python-sdk-dysmsapi/demo.py ${url} 15810130943
+	/root/zy/osu_script/web_monitor/sms/dysms_python/api_demo/aliyun-python-sdk-dysmsapi/demo.py ${url} 15810130943 ${aliyun_temp}
 	#echo $? >> ${log}
 
 }
@@ -40,13 +47,20 @@ do
 	echo "${now} This url  $url not work" >> ${break_file}
 	breaktime=`fgrep ${url} ${break_file} | wc | awk '{print $1}'`
 	if [[ ${breaktime} -eq 3 ]]; then
-	    echo $(zysendmail ${break_file} ${url})
+	    echo $(zysendmail ${break_file} ${url} "break")
 	fi
 	echo -e "URL not work : ${url}\n"
     else
         echo "work well" >> $out
 	echo "URL work well : ${url}"
-	rm ${break_file}
+	if [ -e ${break_file} ]; then
+		new_break_file=${break_file}_`date +%Y%m%d_%H%M%S`
+		mv  ${break_file} ${new_break_file}
+		breaktime=`fgrep ${url} ${new_break_file} | wc | awk '{print $1}'`
+		if [[ ${breaktime} -eq 3 ]]; then
+			echo $(zysendmail ${new_break_file} ${url} "back")
+		fi		
+	fi
     fi
 
     echo "</td></tr>" >> $out

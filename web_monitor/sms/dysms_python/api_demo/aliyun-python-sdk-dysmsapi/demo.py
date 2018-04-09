@@ -82,12 +82,13 @@ def query_send_detail(biz_id, phone_number, page_size, current_page, send_date):
 __name__ = 'send'
 if __name__ == 'send':
     #usage:  ./send_sms  website  phone_number
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print "usage:  ./send_sms  website  phone_number"
         sys.exit(1)
 
     website = sys.argv[1].replace(".","_")
     phone = sys.argv[2]
+    aliyun_temp = sys.argv[3]
     
     print "will send message to " + phone + " for " + website 
 
@@ -95,7 +96,7 @@ if __name__ == 'send':
     print __business_id
     params = "{\"web\":\"" + website + "\"}"
     
-    print send_sms(__business_id, phone, "苏海洋看网站", "SMS_123738824", params)
+    print send_sms(__business_id, phone, "苏海洋看网站", aliyun_temp, params)
     #print send_sms(__business_id, "13000000000", "云通信测试", "SMS_5250008", params)
 
 if __name__ == 'query':
