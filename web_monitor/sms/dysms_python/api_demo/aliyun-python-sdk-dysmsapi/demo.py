@@ -26,8 +26,8 @@ PRODUCT_NAME = "Dysmsapi"
 DOMAIN = "dysmsapi.aliyuncs.com"
 
 # ACCESS_KEY_ID/ACCESS_KEY_SECRET 根据实际申请的账号信息进行替换
-ACCESS_KEY_ID = "p12ngbVXvgggz1zm"
-ACCESS_KEY_SECRET = "VshZvCX1lCDkcE292B2iUiJ6hIQXL4"
+ACCESS_KEY_ID = "p12ngbVXvgg3gz1zm"
+ACCESS_KEY_SECRET = "VshZvCX13lCDkcE292B2iUiJ6hIQXL4"
 
 acs_client = AcsClient(ACCESS_KEY_ID, ACCESS_KEY_SECRET, REGION)
 region_provider.add_endpoint(PRODUCT_NAME,REGION,DOMAIN)
